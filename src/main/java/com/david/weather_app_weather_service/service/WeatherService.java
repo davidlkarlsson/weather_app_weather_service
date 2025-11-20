@@ -41,13 +41,10 @@ public class WeatherService {
         }
 
 
-        // För att kunna hämta en stad med giltigt URL-format i UTF-8
-        String encodedCity = URLEncoder.encode(city, StandardCharsets.UTF_8);
-
         // Hämta geocoding via api för stad (lon + lat)
 
-        String geoUrl = "https://geocoding-api.open-meteo.com/v1/search?name=" + encodedCity +
-                "&count=1&language=en&format=json&countryCode=SE";
+        String geoUrl = "https://geocoding-api.open-meteo.com/v1/search?name=" + city +
+                "&count=1&language=en&format=json";
 
         log.debug(geoUrl);
 
@@ -79,7 +76,7 @@ public class WeatherService {
         // Hämta väder via väder-api
         String weatherUrl = "https://api.open-meteo.com/v1/forecast?latitude=" + lat +
                 "&longitude=" + lon +
-                "&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&timezone=Europe/London&forecast_days=1";
+                "&daily=temperature_2m_max,temperature_2m_min,weather_code,precipitation_sum&timezone=Europe/Berlin&forecast_days=1";
 
         log.debug(weatherUrl);
 
