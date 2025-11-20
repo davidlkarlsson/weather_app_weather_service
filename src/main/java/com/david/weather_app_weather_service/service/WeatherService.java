@@ -30,6 +30,17 @@ public class WeatherService {
 
     public WeatherDTO getWeatherForCity(String city) throws Exception {
 
+
+        // TODO - make custom exception
+        if (city == null || city.isBlank()) {
+            throw new IllegalArgumentException("City name cannot be empty");
+        }
+
+        if (!city.matches("[a-zA-ZåäöÅÄÖ\\- ]+")) {
+            throw new IllegalArgumentException("City name contains invalid characters");
+        }
+
+
         // För att kunna hämta en stad med giltigt URL-format i UTF-8
         String encodedCity = URLEncoder.encode(city, StandardCharsets.UTF_8);
 
@@ -51,9 +62,12 @@ public class WeatherService {
         // Använder Object eftersom värdet som kommer in kan vara av blandad typ (int, double, String osv.)
         List<Map<String, Object>> results = (List<Map<String, Object>>) geoResponse.get("results");
 
+        // TODO - make a custom exception and a exceptionhandler
         if (results == null || results.isEmpty()) {
-            throw new Exception("No city was found with name: " + city);
+            throw new IllegalArgumentException("No city was found with name: " + city);
         }
+
+
 
         Map<String, Object> result = results.get(0);
         double lat = (double) result.get("latitude");
