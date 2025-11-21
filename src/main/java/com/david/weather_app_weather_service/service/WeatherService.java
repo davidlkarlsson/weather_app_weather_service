@@ -2,17 +2,14 @@ package com.david.weather_app_weather_service.service;
 
 
 import com.david.weather_app_weather_service.dto.DailyWeatherDTO;
+import com.david.weather_app_weather_service.dto.RequestWeatherDTO;
 import com.david.weather_app_weather_service.dto.WeatherApiResponseDTO;
-import com.david.weather_app_weather_service.dto.WeatherDTO;
+import com.david.weather_app_weather_service.dto.ResponseWeatherDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
-
-
-import java.net.URLEncoder;
-import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 
@@ -28,22 +25,11 @@ public class WeatherService {
         this.webClient = webClient;
     }
 
-    public WeatherDTO getWeatherForCity(String city) throws Exception {
-
-
-        // TODO - make custom exception
-        if (city == null || city.isBlank()) {
-            throw new IllegalArgumentException("City name cannot be empty");
-        }
-
-        if (!city.matches("[a-zA-ZåäöÅÄÖ\\- ]+")) {
-            throw new IllegalArgumentException("City name contains invalid characters");
-        }
-
+    public ResponseWeatherDTO getWeatherForCity(RequestWeatherDTO request) throws Exception {
 
         // Hämta geocoding via api för stad (lon + lat)
 
-        String geoUrl = "https://geocoding-api.open-meteo.com/v1/search?name=" + city +
+        String geoUrl = "https://geocoding-api.open-meteo.com/v1/search?name=" + request +
                 "&count=1&language=en&format=json";
 
         log.debug(geoUrl);
@@ -61,7 +47,7 @@ public class WeatherService {
 
         // TODO - make a custom exception and a exceptionhandler
         if (results == null || results.isEmpty()) {
-            throw new IllegalArgumentException("No city was found with name: " + city);
+            throw new IllegalArgumentException("No city was found with name: " + request.city());
         }
 
 
@@ -96,7 +82,7 @@ public class WeatherService {
 
         String status = mapWeatherCodeToStatus(weatherCode);
 
-        return new WeatherDTO(time, tempMin, tempMax, status, precipitation);
+        return new ResponseWeatherDTO(time, tempMin, tempMax, status, precipitation);
 
     }
 

@@ -1,6 +1,6 @@
 package com.david.weather_app_weather_service.dto;
 
-public record WeatherDTO(
+public record ResponseWeatherDTO(
 
         String time,
         double temperatureMin,
