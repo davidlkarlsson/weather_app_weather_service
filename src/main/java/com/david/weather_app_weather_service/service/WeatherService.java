@@ -36,7 +36,7 @@ public class WeatherService {
 
         // Hämta geocoding via api för stad (lon + lat)
 
-        String geoUrl = "https://geocoding-api.open-meteo.com/v1/search?name=" + request +
+        String geoUrl = "https://geocoding-api.open-meteo.com/v1/search?name=" + request.city() +
                 "&count=1&language=en&format=json";
 
         log.debug(geoUrl);
