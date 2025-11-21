@@ -23,14 +23,9 @@ public class WeatherController {
     }
 
     @GetMapping("/dailyresult")
-    public ResponseEntity<?> getWeather(@RequestParam String city) {
-        try {
-            RequestWeatherDTO request = new RequestWeatherDTO(city);
+    public ResponseEntity<ResponseWeatherDTO> getWeather(@Valid RequestWeatherDTO request) {
+
             ResponseWeatherDTO dto = weatherService.getWeatherForCity(request);
             return ResponseEntity.ok(dto);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
         }
-}
-
 }

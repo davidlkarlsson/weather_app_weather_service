@@ -5,6 +5,7 @@ import com.david.weather_app_weather_service.dto.DailyWeatherDTO;
 import com.david.weather_app_weather_service.dto.RequestWeatherDTO;
 import com.david.weather_app_weather_service.dto.WeatherApiResponseDTO;
 import com.david.weather_app_weather_service.dto.ResponseWeatherDTO;
+import com.david.weather_app_weather_service.exception.CityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,13 @@ public class WeatherService {
         this.webClient = webClient;
     }
 
-    public ResponseWeatherDTO getWeatherForCity(RequestWeatherDTO request) throws Exception {
+    public ResponseWeatherDTO getWeatherForCity(RequestWeatherDTO request) {
+
+        // Extra validation
+        String city = request.city();
+        if (!city.matches("^[a-zA-ZåäöÅÄÖ\\- ]+$")) {
+            throw new IllegalArgumentException("City name contains invalid characters");
+        }
 
         // Hämta geocoding via api för stad (lon + lat)
 
@@ -45,9 +52,9 @@ public class WeatherService {
         // Använder Object eftersom värdet som kommer in kan vara av blandad typ (int, double, String osv.)
         List<Map<String, Object>> results = (List<Map<String, Object>>) geoResponse.get("results");
 
-        // TODO - make a custom exception and a exceptionhandler
+
         if (results == null || results.isEmpty()) {
-            throw new IllegalArgumentException("No city was found with name: " + request.city());
+            throw new CityNotFoundException(request.city());
         }
 
 
