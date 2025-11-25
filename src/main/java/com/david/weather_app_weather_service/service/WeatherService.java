@@ -6,6 +6,7 @@ import com.david.weather_app_weather_service.dto.RequestWeatherDTO;
 import com.david.weather_app_weather_service.dto.WeatherApiResponseDTO;
 import com.david.weather_app_weather_service.dto.ResponseWeatherDTO;
 import com.david.weather_app_weather_service.exception.CityNotFoundException;
+import com.david.weather_app_weather_service.exception.InvalidCredException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,12 +27,14 @@ public class WeatherService {
         this.webClient = webClient;
     }
 
+
+
     public ResponseWeatherDTO getWeatherForCity(RequestWeatherDTO request) {
 
         // Extra validation
         String city = request.city();
         if (!city.matches("^[a-zA-ZåäöÅÄÖ\\- ]+$")) {
-            throw new IllegalArgumentException("City name contains invalid characters");
+            throw new InvalidCredException("City name contains invalid characters");
         }
 
         // Hämta geocoding via api för stad (lon + lat)
@@ -89,7 +92,11 @@ public class WeatherService {
 
         String status = mapWeatherCodeToStatus(weatherCode);
 
-        return new ResponseWeatherDTO(time, tempMin, tempMax, status, precipitation);
+
+        ResponseWeatherDTO dto = new ResponseWeatherDTO(time, tempMin, tempMax, status, precipitation);
+
+
+        return dto;
 
     }
 
@@ -113,21 +120,3 @@ public class WeatherService {
         };
     }
 }
-
-/* Open-Meteo Weather Forecast API Documentation for codes
-
-Code	Description
-0	Clear sky
-1, 2, 3	Mainly clear, partly cloudy, and overcast
-45, 48	Fog and depositing rime fog
-51, 53, 55	Drizzle: Light, moderate, and dense intensity
-56, 57	Freezing Drizzle: Light and dense intensity
-61, 63, 65	Rain: Slight, moderate and heavy intensity
-66, 67	Freezing Rain: Light and heavy intensity
-71, 73, 75	Snow fall: Slight, moderate, and heavy intensity
-77	Snow grains
-80, 81, 82	Rain showers: Slight, moderate, and violent
-85, 86	Snow showers slight and heavy
-95 *	Thunderstorm: Slight or moderate
-96, 99 *	Thunderstorm with slight and heavy hail
- */

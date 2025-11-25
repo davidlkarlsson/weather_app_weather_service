@@ -29,4 +29,10 @@ public class GlobalExceptionHandler {
         return ResponseEntity.badRequest().body(errors);
     }
 
+    @ExceptionHandler(InvalidCredException.class)
+    public ResponseEntity<String> handleInvalidCredException(InvalidCredException ex) {
+
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
 }
