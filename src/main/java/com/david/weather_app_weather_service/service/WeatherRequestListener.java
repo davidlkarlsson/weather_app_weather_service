@@ -26,7 +26,7 @@ public class WeatherRequestListener {
 
     @RabbitListener(queues = RabbitConfig.REQUEST_QUEUE)
     public void onCityRequest(RequestWeatherDTO request) {
-        log.info("Received request for city: " + request.city() + "with email: " + request.email());
+        log.info("Received request for city: " + request.city());
 
         ResponseWeatherDTO response;
 
@@ -42,7 +42,7 @@ public class WeatherRequestListener {
                     0,
                     "",
                     0,
-                    "",
+                    null,
                     "ERROR: City not found"
             );
 
@@ -53,7 +53,7 @@ public class WeatherRequestListener {
                     0, 0,
                     "",
                     0,
-                    "",
+                    null,
                     "ERROR: Invalid city"
             );
 
@@ -65,7 +65,7 @@ public class WeatherRequestListener {
                     0,
                     "",
                     0,
-                    "",
+                    null,
                     "ERROR: Unexpected error"
             );
         }
