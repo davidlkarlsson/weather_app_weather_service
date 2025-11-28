@@ -40,9 +40,10 @@ public class WeatherRequestListener {
                     Instant.now().toString(),
                     0,
                     0,
-                    "ERROR: City not found",
+                    "",
                     0,
-                    ""
+                    "",
+                    "ERROR: City not found"
             );
 
         } catch (InvalidCredException e) {
@@ -50,9 +51,10 @@ public class WeatherRequestListener {
             response = new ResponseWeatherDTO(
                     Instant.now().toString(),
                     0, 0,
-                    "ERROR: Invalid city",
+                    "",
                     0,
-                    ""
+                    "",
+                    "ERROR: Invalid city"
             );
 
         } catch (Exception e) {
@@ -61,9 +63,10 @@ public class WeatherRequestListener {
                     Instant.now().toString(),
                     0,
                     0,
-                    "ERROR: Unexpected error",
+                    "",
                     0,
-                    ""
+                    "",
+                    "ERROR: Unexpected error"
             );
         }
 
