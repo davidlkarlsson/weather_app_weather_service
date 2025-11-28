@@ -93,7 +93,7 @@ public class WeatherService {
         String status = mapWeatherCodeToStatus(weatherCode);
 
 
-        ResponseWeatherDTO dto = new ResponseWeatherDTO(time, tempMin, tempMax, status, precipitation);
+        ResponseWeatherDTO dto = new ResponseWeatherDTO(time, tempMin, tempMax, status, precipitation, null, null);
 
 
         return dto;
