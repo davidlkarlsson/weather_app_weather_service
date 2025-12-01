@@ -42,7 +42,6 @@ public class WeatherRequestListener {
                     0,
                     "",
                     0,
-                    null,
                     "ERROR: City not found"
             );
 
@@ -53,7 +52,6 @@ public class WeatherRequestListener {
                     0, 0,
                     "",
                     0,
-                    null,
                     "ERROR: Invalid city"
             );
 
@@ -65,7 +63,6 @@ public class WeatherRequestListener {
                     0,
                     "",
                     0,
-                    null,
                     "ERROR: Unexpected error"
             );
         }
