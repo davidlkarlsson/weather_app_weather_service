@@ -89,11 +89,12 @@ public class WeatherService {
         double tempMax = daily.temperature_2m_max().get(0);
         double precipitation = daily.precipitation_sum().get(0);
         int weatherCode = daily.weather_code().get(0);
+        String email = request.email();
 
         String status = mapWeatherCodeToStatus(weatherCode);
 
 
-        ResponseWeatherDTO dto = new ResponseWeatherDTO(time, tempMin, tempMax, status, precipitation,city);
+        ResponseWeatherDTO dto = new ResponseWeatherDTO(time, tempMin, tempMax, status, precipitation,city, email);
 
 
         return dto;

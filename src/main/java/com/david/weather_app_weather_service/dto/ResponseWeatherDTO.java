@@ -9,5 +9,6 @@ public record ResponseWeatherDTO(
         double temperatureMax,
         String weatherStatus,
         double precipitationSum, // Total nederbörd i mm
-        String city
+        String city,
+        String email
 ) {}

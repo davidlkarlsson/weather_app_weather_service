@@ -42,7 +42,8 @@ public class WeatherRequestListener {
                     0,
                     "",
                     0,
-                    "ERROR: City not found"
+                    "ERROR: City not found",
+                    ""
             );
 
         } catch (InvalidCredException e) {
@@ -52,7 +53,8 @@ public class WeatherRequestListener {
                     0, 0,
                     "",
                     0,
-                    "ERROR: Invalid city"
+                    "ERROR: Invalid city",
+                    ""
             );
 
         } catch (Exception e) {
@@ -63,7 +65,8 @@ public class WeatherRequestListener {
                     0,
                     "",
                     0,
-                    "ERROR: Unexpected error"
+                    "ERROR: Unexpected error",
+                    ""
             );
         }
 

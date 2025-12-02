@@ -12,5 +12,6 @@ public record RequestWeatherDTO(
                 regexp = "^[a-zA-ZåäöÅÄÖ\\- ]+$",
                 message = "City name contains invalid characters"
         )
-        String city
+        String city,
+        String email
 ) {}
